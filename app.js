@@ -5,6 +5,9 @@ const gameArea = document.getElementById("canvas")
 const movement = document.getElementById("movement")
 
 // may need width and height properties at some point
+gameArea.setAttribute("width", getComputedStyle(gameArea)["width"])
+gameArea.setAttribute("height", getComputedStyle(gameArea)["height"])
+console.log(gameArea.width)
 
 const ctx = gameArea.getContext("2d")
 
@@ -21,8 +24,12 @@ function player(x, y, color, height, width) {
     ctx.fillRect(this.x, this.y, this.height, this.width)
   }
 }
-
-let bob = new player(30, 30, "lightgreen", 12, 12)
+let bob = new player(150, 110, "yellow", 20, 40)
 console.log("this is the player", bob)
 
-bob.render()
+let gamePlay = () => {
+  //   ctx.clearRect(0, 0, gameArea.width, gameArea.height)
+  bob.render()
+}
+
+let interval = setInterval(gamePlay, 70)
