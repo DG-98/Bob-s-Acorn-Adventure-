@@ -10,7 +10,7 @@ gameArea.setAttribute("height", getComputedStyle(gameArea)["height"])
 console.log(gameArea.width)
 
 const ctx = gameArea.getContext("2d")
-
+//creating game objects
 function player(x, y, color, height, width) {
   this.x = x
   this.y = y
@@ -27,9 +27,30 @@ function player(x, y, color, height, width) {
 let bob = new player(150, 110, "yellow", 20, 40)
 console.log("this is the player", bob)
 
+//X-axis movement
+let BoBmovement = (e) => {
+  switch (e.key) {
+    case "a":
+      bob.x -= 10
+      if (bob.x <= 0) {
+        bob.x = 324
+      }
+      break
+    case "d":
+      bob.x += 10
+      if (bob.x > 325) {
+        bob.x = 1
+      }
+      break
+  }
+}
+
+//game function
 let gamePlay = () => {
-  //   ctx.clearRect(0, 0, gameArea.width, gameArea.height)
+  ctx.clearRect(0, 0, gameArea.width, gameArea.height)
   bob.render()
 }
 
+//animation timing
 let interval = setInterval(gamePlay, 70)
+document.addEventListener("keydown", BoBmovement)
