@@ -102,13 +102,24 @@ let itemNum = 6
 function itemSpawn() {
   setInterval(() => {
     // looking to do random colors
-    let green = new items(150, 0, "green", 10, 10, "good")
+    let green = new items(150, 0, "green", 25, 25, "good")
     itemSpawned.push(green)
   }, 2000)
 }
+
+let bombSpawned = []
+function bombSpawn() {
+  setInterval(() => {
+    let bomb = new bombs(170, 0, "black", 50, 50, "bad")
+    bombSpawned.push(bomb)
+  }, 6000)
+}
+
 itemSpawn()
+bombSpawn()
 
 console.log(itemSpawned)
+console.log(bombSpawn)
 
 //game function
 let gamePlay = () => {
@@ -131,10 +142,15 @@ let gamePlay = () => {
     items.y += descent
   })
 
-  if (bomb.y >= 1000) {
-    bomb.y = 0
-    bomb.x = Math.floor(Math.random() * gameArea.width)
-  }
+  bombSpawned.forEach((bomb) => {
+    bomb.render()
+    bomb.y += descent
+  })
+
+  //   if (bomb.y >= 1000) {
+  //     bomb.y = 0
+  //     bomb.x = Math.floor(Math.random() * gameArea.width)
+  //   }
   requestAnimationFrame(gamePlay)
 }
 // hitbox()
