@@ -60,34 +60,24 @@ function bombs(x, y, color, height, width, type) {
 
 // game items and character
 let bob = new player(150, 930, "yellow", 30, 70)
-let green = new items(150, 0, "green", 10, 10, "good")
+// let green = new items(150, 0, "green", 10, 10, "good")
 let bomb = new bombs(170, 0, "black", 20, 20, "bad")
 console.log("this is the player", bob)
-console.log("this is the 1st item", green)
+// console.log("this is the 1st item", green)
 
-//first stage hit detection
-// let hitbox = () => {
-//   if (
-//     items.y > bob.y + bob.height &&
-//     items.y + items.height > bob.y &&
-//     items.x < bob.x + bob.width &&
-//     items.x + items.width > bob.x
-//   ) {
-//     items.alive = false
-//   }
-// }
+// first stage hit detection
 
 //X-axis movement
 let BoBmovement = (e) => {
   switch (e.key) {
     case "a":
-      bob.x -= 10
+      bob.x -= 20
       if (bob.x <= 0) {
         bob.x = gameArea.width
       }
       break
     case "d":
-      bob.x += 10
+      bob.x += 20
       if (bob.x > gameArea.width) {
         bob.x = 0
       }
@@ -98,7 +88,6 @@ let BoBmovement = (e) => {
 // trying to make multiple items
 
 let itemSpawned = []
-let itemNum = 6
 function itemSpawn() {
   setInterval(() => {
     // looking to do random colors
@@ -119,24 +108,40 @@ itemSpawn()
 bombSpawn()
 
 console.log(itemSpawned)
-console.log(bombSpawn)
+console.log(bombSpawned)
+
+const hitbox = () => {
+  for (i=0; i<itemSpawned.length; i++) {
+    if (
+     itemSpawned[i].y < bob.y + bob.width &&
+     itemSpawned[i].y + itemSpawned[i].height > bob.y &&
+     itemSpawned[i].x < bob.x + bob.width &&
+     itemSpawned[i].x + itemSpawned[i].width > bob.x
+   ) {
+    //  green.alive = false
+     console.log("hit")
+   }
+  }
+
+}
+// console.log(green.alive)
 
 //game function
 let gamePlay = () => {
   ctx.clearRect(0, 0, gameArea.width, gameArea.height)
   bob.render()
-  green.render()
+  // green.render()
   bomb.render()
 
-  green.y += descent
+  // green.y += descent
   bomb.y += descent
   // first falling item auto movement in relation to animation frame
 
   // when the item reaches a certain point in the y-axis it will loop back to the top.
-  // if (green.y >= 1000) {
-  //   green.y = 0
-  //   green.x = Math.floor(Math.random() * gameArea.width)
+  // if (!green.alive) {
+    
   // }
+
   itemSpawned.forEach((items) => {
     items.render()
     items.y += descent
@@ -151,6 +156,7 @@ let gamePlay = () => {
   //     bomb.y = 0
   //     bomb.x = Math.floor(Math.random() * gameArea.width)
   //   }
+  hitbox()
   requestAnimationFrame(gamePlay)
 }
 // hitbox()
