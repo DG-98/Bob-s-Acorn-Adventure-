@@ -110,6 +110,17 @@ bombSpawn()
 console.log(itemSpawned)
 console.log(bombSpawned)
 
+
+function scoreTracker() {
+  ctx.fillText("Score " + score, 10, 20)
+  ctx.fillStyle = 'white'
+}
+
+function lifeTracker() {
+  ctx.fillText("Lives " + lives, 10, 40)
+  ctx. fillStyle = 'white'
+}
+
 const hitbox = () => {
   for (i=0; i<itemSpawned.length; i++) {
     if (
@@ -118,12 +129,37 @@ const hitbox = () => {
      itemSpawned[i].x < bob.x + bob.width &&
      itemSpawned[i].x + itemSpawned[i].width > bob.x
    ) {
+     score ++
     //  green.alive = false
      console.log("hit")
    }
   }
 
 }
+
+console.log('score');
+
+const bombHit = () => {
+  for (i = 0; i < bombSpawned.length; i++) {
+    if (
+      bombSpawned[i].y < bob.y + bob.width &&
+      bombSpawned[i].y + bombSpawned[i].height > bob.y &&
+      bombSpawned[i].x < bob.x + bob.width &&
+      bombSpawned[i].x + bombSpawned[i].width > bob.x
+    ) {
+      lives --
+      console.log("hit bomb")
+    }
+  }
+}
+
+let stop= () => {
+  can
+}
+
+
+
+
 // console.log(green.alive)
 
 //game function
@@ -131,13 +167,11 @@ let gamePlay = () => {
   ctx.clearRect(0, 0, gameArea.width, gameArea.height)
   bob.render()
   // green.render()
-  bomb.render()
+  // bomb.render()
 
   // green.y += descent
   bomb.y += descent
-  // first falling item auto movement in relation to animation frame
-
-  // when the item reaches a certain point in the y-axis it will loop back to the top.
+  
   // if (!green.alive) {
     
   // }
@@ -152,11 +186,13 @@ let gamePlay = () => {
     bomb.y += descent
   })
 
-  //   if (bomb.y >= 1000) {
-  //     bomb.y = 0
-  //     bomb.x = Math.floor(Math.random() * gameArea.width)
-  //   }
   hitbox()
+  bombHit()
+  scoreTracker()
+  lifeTracker()
+  // if (lives = 0) {
+  //   cancelAnimationFrame(gamePlay)
+  // }
   requestAnimationFrame(gamePlay)
 }
 // hitbox()
