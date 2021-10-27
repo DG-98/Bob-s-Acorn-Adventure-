@@ -129,6 +129,7 @@ const hitbox = () => {
      itemSpawned[i].x < bob.x + bob.width &&
      itemSpawned[i].x + itemSpawned[i].width > bob.x
    ) {
+     itemSpawned.shift([i])
      score ++
     //  green.alive = false
      console.log("hit")
@@ -147,6 +148,7 @@ const bombHit = () => {
       bombSpawned[i].x < bob.x + bob.width &&
       bombSpawned[i].x + bombSpawned[i].width > bob.x
     ) {
+      bombSpawned.shift([i])
       lives --
       console.log("hit bomb")
     }
