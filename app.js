@@ -4,6 +4,7 @@ let spawnPoint = 0
 let spawnRate = 1200
 let lastSpawn = -1
 let descent = 1
+let playing = false 
 //game area
 const gameArea = document.getElementById("canvas")
 //movement tracker to determine game edges. not for final product
@@ -59,7 +60,7 @@ function bombs(x, y, color, height, width, type) {
 }
 
 // game items and character
-let bob = new player(150, 930, "yellow", 30, 70)
+let bob = new player(380, 930, "yellow", 30, 70)
 // let green = new items(150, 0, "green", 10, 10, "good")
 let bomb = new bombs(170, 0, "black", 20, 20, "bad")
 console.log("this is the player", bob)
@@ -150,7 +151,11 @@ const bombHit = () => {
     ) {
       bombSpawned.shift([i])
       lives --
-      console.log("hit bomb")
+      if (lives === 0) {
+        bob.alive = false 
+        console.log('hey');
+        cancelAnimationFrame(gamePlay)       
+      }      
     }
   }
 }
@@ -174,9 +179,6 @@ let gamePlay = () => {
   // green.y += descent
   bomb.y += descent
   
-  // if (!green.alive) {
-    
-  // }
 
   itemSpawned.forEach((items) => {
     items.render()
@@ -192,9 +194,6 @@ let gamePlay = () => {
   bombHit()
   scoreTracker()
   lifeTracker()
-  // if (lives = 0) {
-  //   cancelAnimationFrame(gamePlay)
-  // }
   requestAnimationFrame(gamePlay)
 }
 // hitbox()
