@@ -1,9 +1,8 @@
-let lives = 3
-let score = 0
+
 let spawnPoint = 0
 let spawnRate = 1200
 let lastSpawn = -1
-let descent = 1
+let descent = 3
 let playing = false 
 //game area
 const gameArea = document.getElementById("canvas")
@@ -17,6 +16,17 @@ console.log(gameArea.width)
 console.log(gameArea.height)
 
 const ctx = gameArea.getContext("2d")
+// function startPrompt() {
+//   ctx.fillText("Press W to start" + 10, 40)
+//   ctx.fillStyle = "white"
+// }
+// startPrompt()
+let startGame = (e) => {
+  switch (e.key) {
+    case 'w':
+let lives = 3
+let score = 0
+
 //creating game objects
 function player(x, y, color, height, width) {
   this.x = x
@@ -152,9 +162,9 @@ const bombHit = () => {
       bombSpawned.shift([i])
       lives --
       if (lives === 0) {
-        bob.alive = false 
+        bombSpawned.alive = false 
         console.log('hey');
-        cancelAnimationFrame(gamePlay)       
+        clearInterval(interval)       
       }      
     }
   }
@@ -177,7 +187,7 @@ let gamePlay = () => {
   // bomb.render()
 
   // green.y += descent
-  bomb.y += descent
+  // bomb.y += descent
   
 
   itemSpawned.forEach((items) => {
@@ -194,14 +204,17 @@ let gamePlay = () => {
   bombHit()
   scoreTracker()
   lifeTracker()
-  requestAnimationFrame(gamePlay)
+  // requestAnimationFrame(gamePlay)
 }
-// hitbox()
 gamePlay()
 
 //animation timing
-// let interval = setInterval(gamePlay, 70)
+let interval = setInterval(gamePlay, 10)
 document.addEventListener("keydown", BoBmovement)
+break
+  }
+}
+document.addEventListener('keydown',startGame)
 
 // game starts
 //animation runsm time starts
