@@ -1,7 +1,6 @@
 
 let spawnPoint = 0
 let spawnRate = 1200
-let lastSpawn = -1
 let descent = 3
 let playing = false 
 //game area
@@ -24,7 +23,11 @@ let lives = 3
 let score = 0
 
 //creating game objects
-function player(x, y, color, height, width) {
+const bobImg = new Image()
+bobImg.src =
+  ("images/PikPng.com_cartoon-squirrel-png_4794521.png")
+function player(url, x, y, color, height, width) {
+  this.url = url
   this.x = x
   this.y = y
   this.color = color
@@ -32,12 +35,19 @@ function player(x, y, color, height, width) {
   this.width = width
   this.alive = true
   this.render = function () {
-    ctx.fillStyle = this.color
-    ctx.fillRect(this.x, this.y, this.height, this.width)
+    // ctx.fillStyle = this.color
+    ctx.drawImage(this.url, this.x, this.y, this.height, this.width)
   }
 }
+let bob = new player(bobImg, 380, 930, "yellow", 50, 70)
 
-function items(x, y, color, height, width, type) {
+
+
+const acornImg = new Image()
+acornImg.src = ("images/pngaaa.com-3533262.png")
+
+function items(url, x, y, color, height, width, type) {
+  this.url= url
   this.x = Math.floor(Math.random() * gameArea.width)
   this.y = y
   this.color = color
@@ -46,12 +56,16 @@ function items(x, y, color, height, width, type) {
   this.alive = true
   this.type = "good"
   this.render = function () {
-    ctx.fillStyle = this.color
-    ctx.fillRect(this.x, this.y, this.height, this.width)
+    // ctx.fillStyle = this.color
+    ctx.drawImage(this.url, this.x, this.y, this.height, this.width)
   }
 }
 
-function bombs(x, y, color, height, width, type) {
+const bombImg = new Image()
+bombImg.src = ("images/pngwing.com.png")
+
+function bombs(url, x, y, color, height, width, type) {
+  this.url= url
   this.x = Math.floor(Math.random() * gameArea.width)
   this.y = y
   this.color = color
@@ -60,17 +74,33 @@ function bombs(x, y, color, height, width, type) {
   this.alive = true
   this.type = "bad"
   this.render = function () {
-    ctx.fillStyle = this.color
-    ctx.fillRect(this.x, this.y, this.height, this.width)
+    // ctx.fillStyle = this.color
+    ctx.drawImage(this.url, this.x, this.y, this.height, this.width)
   }
 }
 
-// game items and character
-let bob = new player(380, 930, "yellow", 30, 70)
-// let green = new items(150, 0, "green", 10, 10, "good")
-let bomb = new bombs(170, 0, "black", 20, 20, "bad")
-console.log("this is the player", bob)
+function sound(src) {
+  this.sound = document.createElement("audio")
+  this.sound.src = src
+  this.sound.setAttribute("preload", "auto")
+  this.sound.setAttribute("controls", "none")
+  this.sound.style.display = "none"
+  document.body.appendChild(this.sound)
+  this.play = function () {
+    this.sound.play()
+  }
+  this.stop = function () {
+    this.sound.pause()
+  }
+}
 
+gotHitSound = new sound("images/Taco Bell Bong - Sound Effect (HD).mp3")
+
+// game items and character
+
+// let green = new items(150, 0, "green", 10, 10, "good")
+// let bomb = new bombs(170, 0, "black", 20, 20, "bad")
+console.log("this is the player", bob)
 
 //X-axis movement
 let BoBmovement = (e) => {
@@ -96,17 +126,17 @@ let itemSpawned = []
 function itemSpawn() {
   setInterval(() => {
     // looking to do random colors
-    let green = new items(150, 0, "green", 25, 25, "good")
+    let green = new items(acornImg, 150, 0, "green", 25, 25, "good")
     itemSpawned.push(green)
-  }, 2000)
+  }, 800)
 }
 
 let bombSpawned = []
 function bombSpawn() {
   setInterval(() => {
-    let bomb = new bombs(170, 0, "black", 50, 50, "bad")
+    let bomb = new bombs(bombImg,170, 0, "black", 80, 80, "bad")
     bombSpawned.push(bomb)
-  }, 6000)
+  }, 4000)
 }
 
 itemSpawn()
@@ -114,7 +144,6 @@ bombSpawn()
 
 console.log(itemSpawned)
 console.log(bombSpawned)
-
 
 function scoreTracker() {
   ctx.font = '15px Arial'
@@ -127,8 +156,6 @@ function lifeTracker() {
   ctx. fillStyle = 'white'
 }
 
-
-
 const hitbox = () => {
   for (i=0; i<itemSpawned.length; i++) {
     if (
@@ -139,8 +166,6 @@ const hitbox = () => {
    ) {
      itemSpawned.shift([i])
      score ++
-    //  green.alive = false
-     console.log("hit")
    }
   }
 
@@ -156,23 +181,20 @@ const bombHit = () => {
       bombSpawned[i].x < bob.x + bob.width &&
       bombSpawned[i].x + bombSpawned[i].width > bob.x
     ) {
-      bombSpawned.shift([i])
+      gotHitSound.play() 
       lives --
+      bombSpawned.shift([i])     
       if (lives === 0) {
-        bombSpawned.alive = false 
-        console.log('hey');
         clearInterval(interval)
         ctx.font= '40px Arial'
           ctx.fillText("Game over!", 290, 400)
           ctx.fillStyle = "white"
           ctx.fillText("Press W to play again!", 210, 450)
-          ctx.fillStyle = "white"      
+          ctx.fillStyle = "white"           
       }      
     }
   }
 }
-
-// console.log(green.alive)
 
 //game function
 let gamePlay = () => {
