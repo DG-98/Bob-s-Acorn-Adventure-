@@ -6,24 +6,20 @@ let descent = 3
 let playing = false 
 //game area
 const gameArea = document.getElementById("canvas")
-//movement tracker to determine game edges. not for final product
-const movement = document.getElementById("movement")
-
-// may need width and height properties at some point
-// gameArea.setAttribute("width", getComputedStyle(gameArea)["width"])
-// gameArea.setAttribute("height", getComputedStyle(gameArea)["height"])
 console.log(gameArea.width)
 console.log(gameArea.height)
 
 const ctx = gameArea.getContext("2d")
-// function startPrompt() {
-//   ctx.fillText("Press W to start" + 10, 40)
-//   ctx.fillStyle = "white"
-// }
-// startPrompt()
+function startPrompt() {
+  ctx.font = '40px Arial'
+  ctx.fillText("Press W to start!", 270, 420)
+  ctx.fillStyle = "white"
+}
+startPrompt()
 let startGame = (e) => {
   switch (e.key) {
     case 'w':
+ctx.clearRect(0, 0, gameArea.width, gameArea.height)
 let lives = 3
 let score = 0
 
@@ -74,9 +70,7 @@ let bob = new player(380, 930, "yellow", 30, 70)
 // let green = new items(150, 0, "green", 10, 10, "good")
 let bomb = new bombs(170, 0, "black", 20, 20, "bad")
 console.log("this is the player", bob)
-// console.log("this is the 1st item", green)
 
-// first stage hit detection
 
 //X-axis movement
 let BoBmovement = (e) => {
@@ -123,6 +117,7 @@ console.log(bombSpawned)
 
 
 function scoreTracker() {
+  ctx.font = '15px Arial'
   ctx.fillText("Score " + score, 10, 20)
   ctx.fillStyle = 'white'
 }
@@ -131,6 +126,8 @@ function lifeTracker() {
   ctx.fillText("Lives " + lives, 10, 40)
   ctx. fillStyle = 'white'
 }
+
+
 
 const hitbox = () => {
   for (i=0; i<itemSpawned.length; i++) {
@@ -164,18 +161,16 @@ const bombHit = () => {
       if (lives === 0) {
         bombSpawned.alive = false 
         console.log('hey');
-        clearInterval(interval)       
+        clearInterval(interval)
+        ctx.font= '40px Arial'
+          ctx.fillText("Game over!", 290, 400)
+          ctx.fillStyle = "white"
+          ctx.fillText("Press W to play again!", 210, 450)
+          ctx.fillStyle = "white"      
       }      
     }
   }
 }
-
-let stop= () => {
-  can
-}
-
-
-
 
 // console.log(green.alive)
 
@@ -183,12 +178,6 @@ let stop= () => {
 let gamePlay = () => {
   ctx.clearRect(0, 0, gameArea.width, gameArea.height)
   bob.render()
-  // green.render()
-  // bomb.render()
-
-  // green.y += descent
-  // bomb.y += descent
-  
 
   itemSpawned.forEach((items) => {
     items.render()
