@@ -1,5 +1,6 @@
 let spawnRate = 1200
-let descent = 3
+let AcornDescent = 3
+let bombDescent = 6
 
 //game area
 const gameArea = document.getElementById("canvas")
@@ -200,12 +201,12 @@ let startGame = (e) => {
 
         itemSpawned.forEach((items) => {
           items.render()
-          items.y += descent
+          items.y += AcornDescent
         })
 
         bombSpawned.forEach((bomb) => {
           bomb.render()
-          bomb.y += descent
+          bomb.y += bombDescent
         })
 
         hitbox()
