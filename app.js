@@ -91,7 +91,9 @@ let startGame = (e) => {
       }
 
       gotHitSound = new sound("images/Taco Bell Bong - Sound Effect (HD).mp3")
-
+      gotAcornSound = new sound(
+        "images/Human Eating_Crunch - Sound Effect (HD).mp3"
+      )
       // game items and character
 
       // let green = new items(150, 0, "green", 10, 10, "good")
@@ -160,6 +162,7 @@ let startGame = (e) => {
             itemSpawned[i].x < bob.x + bob.width &&
             itemSpawned[i].x + itemSpawned[i].width > bob.x
           ) {
+            gotAcornSound.play()
             itemSpawned.splice(i,1)
             score++
           }
