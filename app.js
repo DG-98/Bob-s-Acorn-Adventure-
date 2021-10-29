@@ -1,7 +1,6 @@
-let spawnPoint = 0
 let spawnRate = 1200
 let descent = 3
-let playing = false
+
 //game area
 const gameArea = document.getElementById("canvas")
 console.log(gameArea.width)
