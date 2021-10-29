@@ -2,7 +2,7 @@
 
 The concept of the game is to to catch Acorns because Bob needs to have food for the winter. You have to be careful and avoid one of the natural predators of a squirrel which are some really ugly eagles because they have to eat too. 
 
-
+Play here! https://dg-98.github.io/Bob-s-Acorn-Adventure-/
 
 # Tech 
 I will be building Bob's Acorn Adventure with HTML, CSS, and Javascript. I will also use HTML canvas to create the gameplay area and mechanics. 
