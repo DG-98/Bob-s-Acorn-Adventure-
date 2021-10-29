@@ -1,6 +1,6 @@
 # Bob's Acorn Adventure 
 
-The concept of the game is to to catch Acorns because Bob needs to have food for the winter. You have to be careful and avoid one of the natural predators of a squirrel and avoid really ugly eagles because they have to eat too. 
+The concept of the game is to to catch Acorns because Bob needs to have food for the winter. You have to be careful and avoid one of the natural predators of a squirrel which are some really ugly eagles because they have to eat too. 
 
 
 
